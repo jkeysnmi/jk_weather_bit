@@ -89,14 +89,15 @@ namespace weatherbit {
 
     /**
     * Reads the number of times the rain gauge has filled and emptied
-	* Returns inches of rain. 
+	* Returns number of dumps since last access. 
     */
     //% weight=30 blockId="weatherbit_rain" block="rain"
     export function rain(): number {
         startRainMonitoring();
         // Will be zero until numRainDumps is greater than 90 = 1"
-        let inchesOfRain = ((numRainDumps * 11) / 1000)
-        return inchesOfRain
+		let rd = numRainDumps
+		numRainDumps = 0
+        return rd
     }
 
     /**
@@ -136,22 +137,38 @@ namespace weatherbit {
 
         let windDir = 0
         windDir = pins.analogReadPin(AnalogPin.P1)
-        if (windDir < 906 && windDir > 886)
-            return "N"
-        else if (windDir < 712 && windDir > 692)
-            return "NE"
-        else if (windDir < 415 && windDir > 395)
-            return "E"
-        else if (windDir < 498 && windDir > 478)
-            return "SE"
-        else if (windDir < 584 && windDir > 564)
-            return "S"
-        else if (windDir < 819 && windDir > 799)
-            return "SW"
-        else if (windDir < 988 && windDir > 968)
-            return "W"
-        else if (windDir < 959 && windDir > 939)
-            return "NW"
+		if (windDir > 878 && windDir <= 912)
+			return "N"
+		if (windDir > 615 && windDir <= 680)
+			return "NNE"
+		if (windDir > 681 && windDir <= 746)
+			return "NE"
+		if (windDir > 381 && windDir <= 393)
+			return "NEE"
+		if (windDir > 391 && windDir <= 414)
+			return "E"
+		if (windDir > 300 && windDir <= 380)
+			return "SEE"
+		if (windDir > 457 && windDir <= 508)
+			return "SE"
+		if (windDir > 415 && windDir <= 456)
+			return "SSE"
+		if (windDir > 552 && windDir <= 614)
+			return "S"
+		if (windDir > 509 && windDir <= 551)
+			return "SSW"
+		if (windDir > 802 && windDir <= 832)
+			return "SW"
+		if (windDir > 747 && windDir <= 801)
+			return "SWW"
+		if (windDir > 971 && windDir <= 1023)
+			return "W"
+		if (windDir > 913 && windDir <= 939)
+			return "NWW"
+		if (windDir > 940 && windDir <= 970)
+			return "NW"
+		if (windDir > 833 && windDir <= 877)
+			return "NNW"
         else
             return "???"
     }
